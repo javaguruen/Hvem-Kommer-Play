@@ -1,4 +1,23 @@
+<!--
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
 #{welcome /}
+        -->
+<h1>Hei</h1>
+Velg en annen trening:
+<form action="@{Application.endreAktivTrening()}" method="GET">
+    <select size="1" name="trening">
+                #{list items:treninger, as:'t'}
+                    <option value="${t.id}">${t.dato}</option>
+                #{/list}
+    </select>
+
+    <!--select name="trening">
+   #{list items:treninger, as:'trening'}
+        <option value="${trening.id}" name="trening">${trening.dato}</option>
+   #{/list}
+</select-->
+<input type="submit" value="Say hello!" />
+</form>
+
