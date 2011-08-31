@@ -1,0 +1,16 @@
+<h1>Registrer ny person</h1>
+
+%{ if ( melding != null) { }%
+  ${melding}
+%{ } }%
+
+<form action="@{Person.ny()}" method="GET">
+    <table>
+    <tr><td>Fornavn: </td><td><input name="person.fornavn" id="person.fornavn" type="text"/></td></tr>
+    <tr><td>Etternavn: </td><td><input name="person.etternavn" id="person.etternavn" type="text"/></td></tr>
+    <tr><td>Epost: </td><td><input name="person.epost" id="person.epost" type="text"/></td></tr>
+    <tr><td>Mobilnr.: </td><td><input name="person.mobilnr" id="person.mobilnr" type="text"/></td></tr>
+    <tr><td><input type="submit" value="Lagre" name="lagre"/></td></tr>
+        </table>
+</form>
+
