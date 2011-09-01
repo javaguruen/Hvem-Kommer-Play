@@ -1,36 +1,48 @@
 package controllers;
 
-import models.Trening;
+import models.*;
+import models.Person;
+import no.hvemkommer.Deltakerstatus;
+import no.hvemkommer.Dummydata;
 import play.*;
 import play.data.validation.Required;
 import play.mvc.*;
 
 import java.util.*;
 
-//import models.*;
-
 public class Application extends Controller {
 
+  public static void settStatus(@Required String person, String status, String trening) {
+    Logger.info("Setter status for person.id=" + person);
+    Logger.info("\tstatus =" + status);
+    Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
+    Dummydata dummydata = new Dummydata();
+    List<Trening> treninger = dummydata.getDummyTreninger();
+    Map<Deltakerstatus, List<Person>> deltakelser = dummydata.getDummeDeltakelse();
 
-    public static void endreAktivTrening(@Required String trening){
-        renderText("Ny trening: " + trening);
-    }
-    public static void index() {
+    Trening defaultTrening = treninger.get(Integer.valueOf(trening));
+    renderTemplate("Application/index.html", treninger, defaultTrening, deltakelser);
+  }
 
-        List<Trening> treninger = getDummyTreninger();
-        render(treninger);
-    }
+  public static void endreAktivTrening(@Required String trening) {
+    Logger.info("Ny trening: " + trening);
+    Dummydata dummydata = new Dummydata();
+    List<Trening> treninger = dummydata.getDummyTreninger();
+    Map<Deltakerstatus, List<Person>> deltakelser = dummydata.getDummeDeltakelse();
 
-    public static List<Trening> getDummyTreninger() {
-        List<Trening> treninger = new ArrayList<Trening>();
-        GregorianCalendar calendar = new GregorianCalendar();
-        for( int i=0; i<4; i++){
-            calendar.add(Calendar.DATE, i*7);
-            Date dato = calendar.getTime();
-            Trening trening = new Trening(dato, "19-20", "Bønes");
-            trening.id = (long)i;
-            treninger.add( trening );
-        }
-        return treninger;
+    Trening defaultTrening = treninger.get(Integer.valueOf(trening));
+    renderTemplate("Application/index.html", treninger, defaultTrening, deltakelser);
+  }
+
+  public static void index() {
+    Dummydata dummydata = new Dummydata();
+    List<Trening> treninger = dummydata.getDummyTreninger();
+    Map<Deltakerstatus, List<Person>> deltakelser = dummydata.getDummeDeltakelse();
+
+    Trening defaultTrening = null;
+    if (treninger.size() > 0) {
+      defaultTrening = treninger.get(0);
     }
+    render(treninger, defaultTrening, deltakelser);
+  }
 }

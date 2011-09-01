@@ -5,9 +5,8 @@
 #{welcome /}
         -->
 <h1>Hei</h1>
-Velg en annen trening:
 <form action="@{Application.endreAktivTrening()}" method="GET">
-    <select size="1" name="trening">
+  Velg en annen trening: <select size="1" name="trening">
                 #{list items:treninger, as:'t'}
                     <option value="${t.id}">${t.dato}</option>
                 #{/list}
@@ -18,6 +17,34 @@ Velg en annen trening:
         <option value="${trening.id}" name="trening">${trening.dato}</option>
    #{/list}
 </select-->
-<input type="submit" value="Say hello!" />
+<input type="submit" value="Endre trening" />
 </form>
 
+<hr>
+  <h2>Registrering gjelder trening : ${defaultTrening.dato}</h2>
+  <form action="@{Application.settStatus()}" method="GET">
+    Velg person: <select size="1" name="person">
+                  #{list items:deltakelser.get(no.hvemkommer.Deltakerstatus.VetIkke), as:'p'}
+                      <option value="${p.id}">${p.fornavn} ${p.etternavn}</option>
+                  #{/list}
+      </select>  <select name="status"><option value="Ja">Ja</option><option value="Nei">Nei</option></select>
+    <input type="hidden" name="trening" value="${defaultTrening.id}"/>
+
+      <!--select name="trening">
+     #{list items:treninger, as:'trening'}
+          <option value="${trening.id}" name="trening">${trening.dato}</option>
+     #{/list}
+  </select-->
+  <input type="submit" value="Sett status" />
+  </form>
+
+<table>
+  <tr><td colspan="3">Antall som kommer: ${deltakelser.get(no.hvemkommer.Deltakerstatus.Ja).size()}</td></tr>
+  #{list items:deltakelser.get(no.hvemkommer.Deltakerstatus.Ja), as:'d'}
+        <tr><td></td><td>${d.fornavn} ${d.etternavn}</td><td>Ta vekk</td></tr>
+    #{/list}
+  <tr><td colspan="3">Kommer ikke</td></tr>
+  #{list items:deltakelser.get(no.hvemkommer.Deltakerstatus.Nei), as:'d'}
+        <tr><td></td><td>${d.fornavn} ${d.etternavn}</td></tr>
+    #{/list}
+</table>

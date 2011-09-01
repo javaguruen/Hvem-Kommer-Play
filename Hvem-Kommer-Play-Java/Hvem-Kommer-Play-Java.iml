@@ -25,13 +25,15 @@
           <root url="file://C:/javalib/play-1.2.3/framework/lib" />
           <root url="jar://C:/javalib/play-1.2.3/framework/lib/junit-4.8.1.jar!/" />
           <root url="jar://C:/javalib/play-1.2.3/framework/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar!/" />
+          <root url="jar://C:/java/play-1.2.3/framework/lib/junit-4.8.1.jar!/" />
+          <root url="jar://C:/java/play-1.2.3/framework/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
         <jarDirectory url="file://c:/javalib/play-1.2.3/framework/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://c:/javalib/play-1.2.3/framework/play-1.2.3.jar!/" />
@@ -40,6 +42,15 @@
         <SOURCES>
           <root url="file://C:/javalib/play-1.2.3/framework/src" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/java/play-1.2.3/framework/play-1.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
