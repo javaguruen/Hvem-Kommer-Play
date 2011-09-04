@@ -4,6 +4,7 @@ import models.*;
 import models.Person;
 import no.hvemkommer.Deltakerstatus;
 import no.hvemkommer.Dummydata;
+import org.junit.Test;
 import play.*;
 import play.data.validation.Required;
 import play.mvc.*;
@@ -11,6 +12,11 @@ import play.mvc.*;
 import java.util.*;
 
 public class Application extends Controller {
+
+  public static void slettPaamelding(){
+      Logger.info("Sletter påmelding");
+      renderText("done");
+  }
 
   public static void settStatus(@Required String person, String status, String trening) {
     Logger.info("Setter status for person.id=" + person);

@@ -7,7 +7,8 @@ import javax.persistence.Entity;
 import java.util.Date;
 
 @Entity
-public class Trening extends Model{
+public class
+        Trening extends Model{
     public Date dato;
     public String tidspunkt;
     public String sted;

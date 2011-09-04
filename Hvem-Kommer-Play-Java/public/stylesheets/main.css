@@ -1,0 +1,6 @@
+tr.kommer td {
+	background-color: #CC9999; color: black;
+}
+tr.kommerIkke td {
+	background-color: #9999CC; color: black;
+}
