@@ -4,7 +4,8 @@
 
 # Home page
 GET     /                                       Application.index
-GET     /Person                                 Person.ny
+#GET     /Person                                 Person.ny
+GET     /personliste                          Persons.list(format:'json')
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
@@ -12,13 +13,12 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-# Catch all
-*       /{controller}/{action}                  {controller}.{action}
 
 # Import CRUD routes
 *      /admin              module:crud
 
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
 
 
 # tester diverse
-GET /personliste/   Persons.listXml(format:'xml')

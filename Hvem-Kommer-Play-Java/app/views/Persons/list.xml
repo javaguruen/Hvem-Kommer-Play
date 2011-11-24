@@ -1,7 +1,7 @@
-<personer>
+<personerList>
 #{list persons, as:'person'}
     <person>
         <artist>${person.fornavn}</artist>
     </person>
 #{/list}  
-</personer>
+</personerList>

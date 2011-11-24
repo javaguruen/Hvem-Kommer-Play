@@ -16,9 +16,4 @@ import java.util.*;
 
 public class Persons extends CRUD {
 
-  public static void listXml() {
-    List<Person> persons = Person.findAll();
-    Logger.info("er innne i listXml. Antall personer=" + persons.size());
-    render(persons);
-  }
 }
