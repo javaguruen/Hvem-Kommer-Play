@@ -17,3 +17,8 @@ GET     /public/                                staticDir:public
 
 # Import CRUD routes
 *      /admin              module:crud
+
+
+
+# tester diverse
+GET /personliste/   Persons.listXml(format:'xml')
