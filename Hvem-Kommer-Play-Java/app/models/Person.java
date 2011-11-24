@@ -19,4 +19,8 @@ public class Person extends Model {
         this.epost = epost;
         this.mobilnr = mobilnr;
     }
+
+    public String toString() {
+      return fornavn + " " + etternavn;
+    }
 }

@@ -3,10 +3,12 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
-#GET     /Person                                 Person.ny
+GET     /                                     Application.index
+#GET    /Person                               Person.ny
 GET     /personliste                          Persons.list(format:'json',orderBy:'fornavn')
 GET     /treningliste                         Trenings.list(format:'json',orderBy:'dato')
+GET     /deltakelseliste                      Deltakelses.list(format:'json')
+#GET     /deltakelseliste/{treningId}          Deltakelses.list(format:'json')
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

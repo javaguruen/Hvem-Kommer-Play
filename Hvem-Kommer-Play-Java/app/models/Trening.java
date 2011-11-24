@@ -4,7 +4,11 @@ import play.db.jpa.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Trening extends Model{
@@ -13,9 +17,17 @@ public class Trening extends Model{
     public String sted;
     public boolean aktiv = true;
 
+    @OneToMany
+    public List<Deltakelse> deltakelser;
+
     public Trening(Date dato, String tidspunkt, String sted) {
         this.dato = dato;
         this.tidspunkt = tidspunkt;
         this.sted = sted;
+        this.deltakelser = new ArrayList<Deltakelse>();
+    }
+
+    public String toString() {
+      return dato.toString() + " - " + sted;
     }
 }
