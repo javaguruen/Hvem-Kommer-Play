@@ -6,6 +6,7 @@
 GET     /                                       Application.index
 #GET     /Person                                 Person.ny
 GET     /personliste                          Persons.list(format:'json')
+GET     /treningliste                         Trenings.list(format:'json',orderBy:'dato')
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
