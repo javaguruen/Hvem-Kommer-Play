@@ -1,0 +1,3 @@
+http://localhost:9000/persons/list
+http://localhost:9000/persons/blank
+http://localhost:9000/persons/show?id=1
