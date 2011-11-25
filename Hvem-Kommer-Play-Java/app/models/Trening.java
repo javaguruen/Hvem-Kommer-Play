@@ -17,14 +17,10 @@ public class Trening extends Model{
     public String sted;
     public boolean aktiv = true;
 
-    @OneToMany
-    public List<Deltakelse> deltakelser;
-
     public Trening(Date dato, String tidspunkt, String sted) {
         this.dato = dato;
         this.tidspunkt = tidspunkt;
         this.sted = sted;
-        this.deltakelser = new ArrayList<Deltakelse>();
     }
 
     public String toString() {

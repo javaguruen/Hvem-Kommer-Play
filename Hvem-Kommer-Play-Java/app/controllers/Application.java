@@ -8,6 +8,7 @@ import org.junit.Test;
 import play.*;
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
+import play.db.jpa.JPABase;
 import play.mvc.*;
 
 import java.util.*;
@@ -20,15 +21,31 @@ public class Application extends Controller {
   }
 
   public static void settStatus(@Required String person, String status, String trening) {
-    Logger.info("Setter status for person.id=" + person);
+    Logger.info("Setter status for person.id=" + person + ", for trening.id=" + trening);
     Logger.info("\tstatus =" + status);
+
+    Person endreForPerson = Person.findById(Long.valueOf(person));
+    Trening endreForTrening = Trening.findById(Long.valueOf(trening));
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
-    Dummydata dummydata = new Dummydata();
+
+    new Deltakelse(endreForPerson, endreForTrening, deltakerstatus).save();
+
+    List<Trening> treninger = hentAktiveTreninger();
+
+    Long treningsId = finnNesteTreningId(treninger);
+
+    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
+    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
+
+    List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
+
+    /*Dummydata dummydata = new Dummydata();
     List<Trening> treninger = dummydata.getDummyTreninger();
     Map<Deltakerstatus, List<Person>> deltakelser = dummydata.getDummeDeltakelse();
 
-    Trening defaultTrening = treninger.get(Integer.valueOf(trening));
-    renderTemplate("Application/index.html", treninger, defaultTrening, deltakelser);
+    Trening defaultTrening = treninger.get(Integer.valueOf(trening));*/
+
+    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
   }
 
   public static void endreAktivTrening(@Required String trening) {
@@ -42,17 +59,37 @@ public class Application extends Controller {
   }
 
   public static void index() {
-    List<Trening> treninger = Trening.find("aktiv=true order by dato ASC").fetch();
+    List<Trening> treninger = hentAktiveTreninger();
 
-    Trening nesteTrening = treninger.get(0);
-    Long treningsId = nesteTrening.getId();
+    Long treningsId = finnNesteTreningId(treninger);
 
-    List<Deltakelse> deltakelserKommer = Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Ja, treningsId).fetch();
-    List<Deltakelse> deltakelserKommerIkke = Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Nei, treningsId).fetch();
+    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
+    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
 
-    List<Person> personerUtenStatus = Person.find("from Person as p WHERE p.aktiv=true and not exists(select 'x' from Deltakelse as d where d.trening.id=? and d.person.id=p.id)", treningsId).fetch();
+    List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
 
     render(treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
+  }
+
+  private static Long finnNesteTreningId(List<Trening> treninger) {
+    Trening nesteTrening = treninger.get(0);
+    return nesteTrening.getId();
+  }
+
+  private static List<Person> hentPersonerUtenStatus(Long treningsId) {
+    return Person.find("from Person as p WHERE p.aktiv=true and not exists(select 'x' from Deltakelse as d where d.trening.id=? and d.person.id=p.id)", treningsId).fetch();
+  }
+
+  private static List<Deltakelse> hentDeltakelserKommerIkke(Long treningsId) {
+    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Nei, treningsId).fetch();
+  }
+
+  private static List<Deltakelse> hentDeltakelserKommer(Long treningsId) {
+    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Ja, treningsId).fetch();
+  }
+
+  private static List<Trening> hentAktiveTreninger() {
+    return Trening.find("aktiv=true order by dato ASC").fetch();
   }
 
 
