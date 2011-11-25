@@ -5,21 +5,29 @@ import models.Person;
 import no.hvemkommer.Deltakerstatus;
 import play.*;
 import play.data.validation.Required;
+import play.db.jpa.JPABase;
 import play.mvc.*;
 
 import java.util.*;
 
 public class Application extends Controller {
 
-  public static void slettPaamelding(String personId){
-      Logger.info("Sletter påmelding for personid=" + personId);
-      System.out.println("Sletter påmelding for personid=" + personId);
+  public static void slettPaamelding(String deltakelseId){
+    Deltakelse deltakelse = Deltakelse.findById(Long.valueOf(deltakelseId));
 
+    Trening gjeldendeTrening = deltakelse.trening;
 
+    deltakelse.delete();
 
+    List<Trening> treninger = hentAktiveTreninger();
 
+    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(gjeldendeTrening.getId());
+    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(gjeldendeTrening.getId());
 
-      //renderText("done");
+    List<Person> personerUtenStatus = hentPersonerUtenStatus(gjeldendeTrening.getId());
+
+    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
+
   }
 
   public static void settStatus(@Required String person, String status, String trening) {
