@@ -51,4 +51,17 @@ public class Application extends Controller {
     }
     render(treninger, defaultTrening, deltakelser);
   }
+
+
+  public static void listDeltakelser(long treningsid){
+    //Finn alle deltakelser for gitte trening
+    List<Deltakelse> deltakelser = Deltakelse.find("trening.id=?", treningsid).fetch();
+    renderJSON( deltakelser );
+  }
+
+  public static void listDeltakelserNesteTrening(){
+    List<Trening> treninger = Trening.find("aktiv=true order by dato ASC").fetch(1);
+    //Finne neste trening
+    listDeltakelser(treninger.get(0).getId());
+  }
 }

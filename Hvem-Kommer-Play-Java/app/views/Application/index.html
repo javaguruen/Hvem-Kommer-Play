@@ -11,12 +11,6 @@
     <option value="${t.id}">${t.dato}</option>
     #{/list}
 </select>
-
-    <!--select name="trening">
-   #{list items:treninger, as:'trening'}
-        <option value="${trening.id}" name="trening">${trening.dato}</option>
-   #{/list}
-</select-->
     <input type="submit" value="Endre trening"/>
 </form>
 
@@ -30,11 +24,10 @@ Klokkeslett: ${defaultTrening.tidspunkt} <br>
     #{list items:deltakelser.get(no.hvemkommer.Deltakerstatus.VetIkke), as:'p'}
     <option value="${p.id}">${p.fornavn} ${p.etternavn}</option>
     #{/list}
-</select> <select name="status">
-    <option value="Ja">Ja</option>
-    <option value="Nei">Nei</option>
-</select>
-     antall: <input type="text" size="1" name="antall" value="1"/>
+  </select> <select name="status">
+      <option value="Ja">Ja</option>
+      <option value="Nei">Nei</option>
+  </select>
     <input type="hidden" name="trening" value="${defaultTrening.id}"/>
 
     <!--select name="trening">

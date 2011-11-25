@@ -12,7 +12,6 @@ public class Person extends Model {
     public String mobilnr;
     public boolean aktiv = true;
 
-
     public Person(String fornavn, String etternavn, String epost, String mobilnr) {
         this.fornavn = fornavn;
         this.etternavn = etternavn;
@@ -20,7 +19,8 @@ public class Person extends Model {
         this.mobilnr = mobilnr;
     }
 
-    public String toString() {
+  @Override
+  public String toString() {
       return fornavn + " " + etternavn;
     }
 }
