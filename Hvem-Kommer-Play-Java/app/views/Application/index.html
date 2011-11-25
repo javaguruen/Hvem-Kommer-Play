@@ -8,14 +8,14 @@
 <form action="@{Application.endreAktivTrening()}" method="GET">
     Velg en annen trening: <select size="1" name="trening">
     #{list items:treninger, as:'t'}
-    <option value="${t.id}">${t.dato}</option>
+    <option value="${t.id}">${no.hvemkommer.DatoUtil.formatterDato( t.dato )}</option>
     #{/list}
 </select>
     <input type="submit" value="Endre trening"/>
 </form>
 
 <hr>
-<h2>Registrering gjelder trening : ${gjeldendeTrening.dato}</h2>
+<h2>Registrering gjelder trening : ${no.hvemkommer.DatoUtil.formatterDato( gjeldendeTrening.dato )}</h2>
 Sted: ${gjeldendeTrening.sted} <br>
 Klokkeslett: ${gjeldendeTrening.tidspunkt} <br>
 <p>

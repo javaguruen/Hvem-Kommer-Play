@@ -29,12 +29,11 @@ public class Application extends Controller {
     Person endreForPerson = Person.findById(Long.valueOf(person));
     Trening gjeldendeTrening = Trening.findById(Long.valueOf(trening));
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
-
     new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
 
     List<Trening> treninger = hentAktiveTreninger();
 
-    Long treningsId = finnNesteTreningId(treninger);
+    Long treningsId = gjeldendeTrening.getId();
 
     List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
     List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
