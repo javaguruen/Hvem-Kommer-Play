@@ -24,7 +24,6 @@ public class Dummydata {
 
     deltakerstatuser.put(Deltakerstatus.Ja, kommer);
     deltakerstatuser.put(Deltakerstatus.Nei, kommerIkke);
-    deltakerstatuser.put(Deltakerstatus.VetIkke, vetIkke);
 
     return deltakerstatuser;
   }

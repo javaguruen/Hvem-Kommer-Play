@@ -4,11 +4,8 @@ import models.*;
 import models.Person;
 import no.hvemkommer.Deltakerstatus;
 import no.hvemkommer.Dummydata;
-import org.junit.Test;
 import play.*;
 import play.data.validation.Required;
-import play.db.jpa.GenericModel;
-import play.db.jpa.JPABase;
 import play.mvc.*;
 
 import java.util.*;
@@ -39,23 +36,22 @@ public class Application extends Controller {
 
     List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
 
-    /*Dummydata dummydata = new Dummydata();
-    List<Trening> treninger = dummydata.getDummyTreninger();
-    Map<Deltakerstatus, List<Person>> deltakelser = dummydata.getDummeDeltakelse();
-
-    Trening defaultTrening = treninger.get(Integer.valueOf(trening));*/
-
+    //todo: Må ta inn endreForTrening
     renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
   }
 
   public static void endreAktivTrening(@Required String trening) {
-    Logger.info("Ny trening: " + trening);
-    Dummydata dummydata = new Dummydata();
-    List<Trening> treninger = dummydata.getDummyTreninger();
-    Map<Deltakerstatus, List<Person>> deltakelser = dummydata.getDummeDeltakelse();
+    Logger.info("Ny treningId: " + trening);
 
-    Trening defaultTrening = treninger.get(Integer.valueOf(trening));
-    renderTemplate("Application/index.html", treninger, defaultTrening, deltakelser);
+    List<Trening> treninger = hentAktiveTreninger();
+
+    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(Long.valueOf(trening));
+    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(Long.valueOf(trening));
+
+    List<Person> personerUtenStatus = hentPersonerUtenStatus(Long.valueOf(trening));
+
+    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
+
   }
 
   public static void index() {
