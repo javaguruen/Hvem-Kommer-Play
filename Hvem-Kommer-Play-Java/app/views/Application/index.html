@@ -4,7 +4,7 @@
 
 #{welcome /}
         -->
-<h1>Hei</h1>
+<h1>Påmelding til fotballtrening</h1>
 <form action="@{Application.endreAktivTrening()}" method="GET">
     Velg en annen trening: <select size="1" name="trening">
     #{list items:treninger, as:'t'}
@@ -58,7 +58,7 @@ Klokkeslett: ${defaultTrening.tidspunkt} <br>
     <tr class="kommerIkke">
         <td></td>
         <td>${d.person.fornavn} ${d.person.etternavn}</td>
-        <td><a href="@{Application.slettPaamelding()}">Ta vekk</a></td>
+        <td><a href="@{Application.slettPaamelding(d.id)}">Ta vekk</a></td>
     </tr>
     #{/list}
 </table>

@@ -12,9 +12,15 @@ import java.util.*;
 
 public class Application extends Controller {
 
-  public static void slettPaamelding(){
-      Logger.info("Sletter påmelding");
-      renderText("done");
+  public static void slettPaamelding(String personId){
+      Logger.info("Sletter påmelding for personid=" + personId);
+      System.out.println("Sletter påmelding for personid=" + personId);
+
+
+
+
+
+      //renderText("done");
   }
 
   public static void settStatus(@Required String person, String status, String trening) {
