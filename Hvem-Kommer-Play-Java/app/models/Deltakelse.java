@@ -29,4 +29,5 @@ public class Deltakelse extends Model {
   public String toString() {
     return person.toString() + " - " + status;
   }
+
 }
