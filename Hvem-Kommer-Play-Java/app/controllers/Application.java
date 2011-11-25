@@ -7,6 +7,7 @@ import no.hvemkommer.Dummydata;
 import org.junit.Test;
 import play.*;
 import play.data.validation.Required;
+import play.db.jpa.GenericModel;
 import play.mvc.*;
 
 import java.util.*;
@@ -41,15 +42,17 @@ public class Application extends Controller {
   }
 
   public static void index() {
-    Dummydata dummydata = new Dummydata();
-    List<Trening> treninger = dummydata.getDummyTreninger();
-    Map<Deltakerstatus, List<Person>> deltakelser = dummydata.getDummeDeltakelse();
+    List<Trening> treninger = Trening.find("aktiv=true order by dato ASC").fetch();
 
-    Trening defaultTrening = null;
-    if (treninger.size() > 0) {
-      defaultTrening = treninger.get(0);
-    }
-    render(treninger, defaultTrening, deltakelser);
+    Trening nesteTrening = treninger.get(0);
+    Long treningsId = nesteTrening.getId();
+
+    List<Deltakelse> deltakelserKommer = Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Ja, treningsId).fetch();
+    List<Deltakelse> deltakelserKommerIkke = Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Nei, treningsId).fetch();
+
+    List<Person> personerUtenStatus = Person.find("from Person as p WHERE p.aktiv=true and not exists(select 'x' from Deltakelse as d where d.trening.id=? and d.person.id=p.id)", treningsId).fetch();
+
+    render(treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
   }
 
 

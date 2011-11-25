@@ -15,13 +15,15 @@
 </form>
 
 <hr>
+%{defaultTrening = treninger.get(0);}%
+
 <h2>Registrering gjelder trening : ${defaultTrening.dato}</h2>
 Sted: ${defaultTrening.sted} <br>
 Klokkeslett: ${defaultTrening.tidspunkt} <br>
 <p>
 <form action="@{Application.settStatus()}" method="GET">
     Velg person: <select size="1" name="person">
-    #{list items:deltakelser.get(no.hvemkommer.Deltakerstatus.VetIkke), as:'p'}
+    #{list items:personerUtenStatus, as:'p'}
     <option value="${p.id}">${p.fornavn} ${p.etternavn}</option>
     #{/list}
   </select> <select name="status">
@@ -40,22 +42,22 @@ Klokkeslett: ${defaultTrening.tidspunkt} <br>
 </p>
 <p><table>
     <tr>
-        <td colspan="3">Antall som kommer: ${deltakelser.get(no.hvemkommer.Deltakerstatus.Ja).size()}</td>
+        <td colspan="3">Antall som kommer: ${deltakelserKommer.size()}</td>
     </tr>
-    #{list items:deltakelser.get(no.hvemkommer.Deltakerstatus.Ja), as:'d'}
+    #{list items:deltakelserKommer, as:'d'}
     <tr class="kommer">
         <td></td>
-        <td>${d.fornavn} ${d.etternavn}</td>
+        <td>${d.person.fornavn} ${d.person.etternavn}</td>
         <td>Ta vekk</td>
     </tr>
     #{/list}
     <tr>
         <td colspan="3">Kommer ikke</td>
     </tr>
-    #{list items:deltakelser.get(no.hvemkommer.Deltakerstatus.Nei), as:'d'}
+    #{list items:deltakelserKommerIkke, as:'d'}
     <tr class="kommerIkke">
         <td></td>
-        <td>${d.fornavn} ${d.etternavn}</td>
+        <td>${d.person.fornavn} ${d.person.etternavn}</td>
         <td><a href="@{Application.slettPaamelding()}">Ta vekk</a></td>
     </tr>
     #{/list}
