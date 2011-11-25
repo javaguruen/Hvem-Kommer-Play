@@ -1,15 +1,11 @@
 package controllers;
 
 
-//import models.*;
-
-import models.Trening;
-import play.db.Model;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import play.mvc.Before;
 
 public class Trenings extends CRUD {
-
+    @Before
+    public static void addFilter() {
+        request.args.put("where", "aktiv=true");
+    }
 }

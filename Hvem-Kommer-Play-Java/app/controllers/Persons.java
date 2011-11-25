@@ -1,19 +1,11 @@
 package controllers;
 
-import models.Person;
-import models.Trening;
-import play.data.validation.Required;
-import play.db.Model;
-import play.exceptions.TemplateNotFoundException;
-import play.mvc.Controller;
-import play.*;
-import play.mvc.*;
+import play.mvc.Before;
 
-import java.util.*;
-
-
-//import models.*;
 
 public class Persons extends CRUD {
-
+   @Before
+   public static void addFilter() {
+       request.args.put("where", "aktiv=true");
+   }
 }
