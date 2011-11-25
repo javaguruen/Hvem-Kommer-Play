@@ -3,7 +3,6 @@ package controllers;
 import models.*;
 import models.Person;
 import no.hvemkommer.Deltakerstatus;
-import no.hvemkommer.Dummydata;
 import play.*;
 import play.data.validation.Required;
 import play.mvc.*;
@@ -28,10 +27,10 @@ public class Application extends Controller {
     Logger.info("\tstatus =" + status);
 
     Person endreForPerson = Person.findById(Long.valueOf(person));
-    Trening endreForTrening = Trening.findById(Long.valueOf(trening));
+    Trening gjeldendeTrening = Trening.findById(Long.valueOf(trening));
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
 
-    new Deltakelse(endreForPerson, endreForTrening, deltakerstatus).save();
+    new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
 
     List<Trening> treninger = hentAktiveTreninger();
 
@@ -42,35 +41,33 @@ public class Application extends Controller {
 
     List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
 
-    //todo: Må ta inn endreForTrening
-    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
+    //todo: Må ta inn gjeldendeTrening
+    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
   }
 
   public static void endreAktivTrening(@Required String trening) {
     Logger.info("Ny treningId: " + trening);
-
     List<Trening> treninger = hentAktiveTreninger();
+    Long treningsId = Long.valueOf(trening);
+    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
+    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
+    List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
+    Trening gjeldendeTrening = Trening.findById(treningsId);
 
-    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(Long.valueOf(trening));
-    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(Long.valueOf(trening));
-
-    List<Person> personerUtenStatus = hentPersonerUtenStatus(Long.valueOf(trening));
-
-    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
+    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
 
   }
 
   public static void index() {
     List<Trening> treninger = hentAktiveTreninger();
-
     Long treningsId = finnNesteTreningId(treninger);
-
+    Trening gjeldendeTrening = Trening.findById(treningsId);
     List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
     List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
 
     List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
 
-    render(treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus);
+    render(treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
   }
 
   private static Long finnNesteTreningId(List<Trening> treninger) {
