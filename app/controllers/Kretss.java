@@ -1,14 +1,18 @@
 package controllers;
 
-import play.mvc.Before;
+import models.Krets;
+import models.Trening;
 
+import java.util.List;
 
 public class Kretss extends CRUD {
 
+  public static void velgKrets(){
+    List<Krets> kretser = hentAktiveKretser();
 
+  }
 
-   /*@Before
-   public static void addFilter() {
-       request.args.put("where", "aktiv=true");
-   } */
+  private static List<Krets> hentAktiveKretser() {
+    return Krets.find("aktiv=true").fetch();
+  }
 }
