@@ -26,7 +26,7 @@ public class Application extends Controller {
 
     List<Person> personerUtenStatus = hentPersonerUtenStatus(gjeldendeTrening.getId());
 
-    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
+    redirect("Application.index", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
 
   }
 
@@ -49,7 +49,7 @@ public class Application extends Controller {
     List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
 
     //todo: Må ta inn gjeldendeTrening
-    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
+    redirect("Application.index", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
   }
 
   public static void endreAktivTrening(@Required String trening) {
@@ -68,6 +68,7 @@ public class Application extends Controller {
   public static void index() {
     List<Trening> treninger = hentAktiveTreninger();
     Long treningsId = finnNesteTreningId(treninger);
+
     Trening gjeldendeTrening = Trening.findById(treningsId);
     List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
     List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
@@ -78,8 +79,13 @@ public class Application extends Controller {
   }
 
   private static Long finnNesteTreningId(List<Trening> treninger) {
-    Trening nesteTrening = treninger.get(0);
-    return nesteTrening.getId();
+    if( treninger.size() == 0){
+      return null;
+    }
+    else{
+      Trening nesteTrening = treninger.get(0);
+      return nesteTrening.getId();
+    }
   }
 
   private static List<Person> hentPersonerUtenStatus(Long treningsId) {
