@@ -14,20 +14,9 @@ public class Application extends Controller {
 
   public static void slettPaamelding(String deltakelseId){
     Deltakelse deltakelse = Deltakelse.findById(Long.valueOf(deltakelseId));
-
-    Trening gjeldendeTrening = deltakelse.trening;
-
+    String treningId = deltakelse.trening.getId().toString();
     deltakelse.delete();
-
-    List<Trening> treninger = hentAktiveTreninger();
-
-    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(gjeldendeTrening.getId());
-    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(gjeldendeTrening.getId());
-
-    List<Person> personerUtenStatus = hentPersonerUtenStatus(gjeldendeTrening.getId());
-
-    redirect("Application.index", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
-
+    redirect("Application.index",treningId);
   }
 
   public static void settStatus(@Required String person, String status, String trening) {
@@ -38,30 +27,27 @@ public class Application extends Controller {
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
     if (person!=null) {
         Person endreForPerson = Person.findById(Long.valueOf(person));
+        // TODO: Sjekk først om gitt deltakelse finnes fra før
         new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
     }
 
-    //todo: Må ta inn gjeldendeTrening
-    redirect("Application.index");
+    redirect("Application.index",trening);
   }
 
 
     public static void endreAktivTrening(@Required String trening) {
     Logger.info("Ny treningId: " + trening);
-    List<Trening> treninger = hentAktiveTreninger();
-    Long treningsId = Long.valueOf(trening);
-    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
-    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
-    List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
-    Trening gjeldendeTrening = Trening.findById(treningsId);
-
-    renderTemplate("Application/index.html", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
-
+    redirect("Application.index",trening);
   }
 
-  public static void index() {
+  public static void index(String trening) {
+    Long treningsId;
     List<Trening> treninger = hentAktiveTreninger();
-    Long treningsId = finnNesteTreningId(treninger);
+    if (trening==null) {
+        treningsId = finnNesteTreningId(treninger);
+    } else {
+        treningsId = Long.valueOf(trening);
+    }
 
     Trening gjeldendeTrening = Trening.findById(treningsId);
     List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
