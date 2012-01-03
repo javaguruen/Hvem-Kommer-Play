@@ -12,11 +12,11 @@ import java.util.*;
 
 public class Application extends Controller {
 
-  public static void slettPaamelding(String deltakelseId){
+  public static void slettPaamelding(String deltakelseId) {
     Deltakelse deltakelse = Deltakelse.findById(Long.valueOf(deltakelseId));
     String treningId = deltakelse.trening.getId().toString();
     deltakelse.delete();
-    redirect("Application.index",treningId);
+    redirect("Application.index", treningId);
   }
 
   public static void settStatus(@Required String person, String status, String trening) {
@@ -25,28 +25,28 @@ public class Application extends Controller {
 
     Trening gjeldendeTrening = Trening.findById(Long.valueOf(trening));
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
-    if (person!=null) {
-        Person endreForPerson = Person.findById(Long.valueOf(person));
-        // TODO: Sjekk først om gitt deltakelse finnes fra før
-        new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
+    if (person != null) {
+      Person endreForPerson = Person.findById(Long.valueOf(person));
+      // TODO: Sjekk først om gitt deltakelse finnes fra før
+      new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
     }
 
-    redirect("Application.index",trening);
+    redirect("Application.index", trening);
   }
 
 
-    public static void endreAktivTrening(@Required String trening) {
+  public static void endreAktivTrening(@Required String trening) {
     Logger.info("Ny treningId: " + trening);
-    redirect("Application.index",trening);
+    redirect("Application.index", trening);
   }
 
   public static void index(String trening) {
     Long treningsId;
     List<Trening> treninger = hentAktiveTreninger();
-    if (trening==null) {
-        treningsId = finnNesteTreningId(treninger);
+    if (trening == null) {
+      treningsId = finnNesteTreningId(treninger);
     } else {
-        treningsId = Long.valueOf(trening);
+      treningsId = Long.valueOf(trening);
     }
 
     Trening gjeldendeTrening = Trening.findById(treningsId);
@@ -59,10 +59,9 @@ public class Application extends Controller {
   }
 
   private static Long finnNesteTreningId(List<Trening> treninger) {
-    if( treninger.size() == 0){
+    if (treninger.size() == 0) {
       return null;
-    }
-    else{
+    } else {
       Trening nesteTrening = treninger.get(0);
       return nesteTrening.getId();
     }
@@ -85,13 +84,13 @@ public class Application extends Controller {
   }
 
 
-  public static void listDeltakelser(long treningsid){
+  public static void listDeltakelser(long treningsid) {
     //Finn alle deltakelser for gitte trening
     List<Deltakelse> deltakelser = Deltakelse.find("trening.id=?", treningsid).fetch();
-    renderJSON( deltakelser );
+    renderJSON(deltakelser);
   }
 
-  public static void listDeltakelserNesteTrening(){
+  public static void listDeltakelserNesteTrening() {
     List<Trening> treninger = Trening.find("aktiv=true order by dato ASC").fetch(1);
     //Finne neste trening
     listDeltakelser(treninger.get(0).getId());
