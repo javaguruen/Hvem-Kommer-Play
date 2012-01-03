@@ -6,6 +6,7 @@ import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 
 @Entity
@@ -29,5 +30,14 @@ public class Deltakelse extends Model {
   public String toString() {
     return person.toString() + " - " + status;
   }
+
+  public static List<Deltakelse> finnAlleSomIkkeKommer(Long treningsId) {
+    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Nei, treningsId).fetch();
+  }
+
+  public static List<Deltakelse> finnAlleSomKommer(Long treningsId) {
+    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Ja, treningsId).fetch();
+  }
+
 
 }

@@ -37,4 +37,9 @@ public class Trening extends Model {
   public String toString() {
     return dato.toString() + " - " + sted;
   }
+
+  public static List<Trening> finnAlleAktive() {
+    return Trening.find("aktiv=true order by dato ASC").fetch();
+  }
+
 }

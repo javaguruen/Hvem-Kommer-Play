@@ -42,7 +42,7 @@ public class Application extends Controller {
 
   public static void index(String trening) {
     Long treningsId;
-    List<Trening> treninger = hentAktiveTreninger();
+    List<Trening> treninger = Trening.finnAlleAktive();
     if (trening == null) {
       treningsId = finnNesteTreningId(treninger);
     } else {
@@ -50,10 +50,9 @@ public class Application extends Controller {
     }
 
     Trening gjeldendeTrening = Trening.findById(treningsId);
-    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
-    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
-
-    List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
+    List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(treningsId);
+    List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(treningsId);
+    List<Person> personerUtenStatus = Person.finnAlleUtenStatus(treningsId);
 
     render(treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
   }
@@ -66,23 +65,6 @@ public class Application extends Controller {
       return nesteTrening.getId();
     }
   }
-
-  private static List<Person> hentPersonerUtenStatus(Long treningsId) {
-    return Person.find("from Person as p WHERE p.aktiv=true and not exists(select 'x' from Deltakelse as d where d.trening.id=? and d.person.id=p.id)", treningsId).fetch();
-  }
-
-  private static List<Deltakelse> hentDeltakelserKommerIkke(Long treningsId) {
-    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Nei, treningsId).fetch();
-  }
-
-  private static List<Deltakelse> hentDeltakelserKommer(Long treningsId) {
-    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Ja, treningsId).fetch();
-  }
-
-  private static List<Trening> hentAktiveTreninger() {
-    return Trening.find("aktiv=true order by dato ASC").fetch();
-  }
-
 
   public static void listDeltakelser(long treningsid) {
     //Finn alle deltakelser for gitte trening

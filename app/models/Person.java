@@ -3,6 +3,7 @@ package models;
 import play.db.jpa.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Person extends Model {
@@ -27,5 +28,9 @@ public class Person extends Model {
   @Override
   public String toString() {
     return fornavn + " " + etternavn;
+  }
+
+  public static List<Person> finnAlleUtenStatus(Long treningsId) {
+  return Person.find("from Person as p WHERE p.aktiv=true and not exists(select 'x' from Deltakelse as d where d.trening.id=? and d.person.id=p.id)", treningsId).fetch();
   }
 }
