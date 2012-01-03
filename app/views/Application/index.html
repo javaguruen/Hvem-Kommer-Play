@@ -6,7 +6,7 @@
         -->
 <h1>Påmelding til fotballtrening</h1>
 <form action="@{Application.endreAktivTrening()}" method="GET">
-    Velg en annen trening: <select size="1" name="trening">
+    Velg en annen trening: <select size="1" name="treningId">
     #{list items:treninger, as:'t'}
     <option value="${t.id}">${no.hvemkommer.DatoUtil.formatterDato( t.dato )}</option>
     #{/list}
@@ -20,7 +20,7 @@ Sted: ${gjeldendeTrening.sted} <br>
 Klokkeslett: ${gjeldendeTrening.tidspunkt} <br>
 <p>
 <form action="@{Application.settStatus()}" method="GET">
-    Velg person: <select size="1" name="person">
+    Velg person: <select size="1" name="personId">
     #{list items:personerUtenStatus, as:'p'}
     <option value="${p.id}">${p.fornavn} ${p.etternavn}</option>
     #{/list}
@@ -28,7 +28,7 @@ Klokkeslett: ${gjeldendeTrening.tidspunkt} <br>
       <option value="Ja">Ja</option>
       <option value="Nei">Nei</option>
   </select>
-    <input type="hidden" name="trening" value="${gjeldendeTrening.id}"/>
+    <input type="hidden" name="treningId" value="${gjeldendeTrening.id}"/>
 
     <!--select name="trening">
        #{list items:treninger, as:'trening'}

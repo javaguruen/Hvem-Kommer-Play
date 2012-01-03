@@ -1,63 +1,58 @@
 package controllers;
 
-import models.*;
+import models.Deltakelse;
 import models.Person;
+import models.Trening;
 import no.hvemkommer.Deltakerstatus;
-import play.*;
 import play.Logger;
 import play.data.validation.Required;
-import play.db.jpa.JPABase;
-import play.mvc.*;
+import play.mvc.Controller;
 
-import java.util.*;
-import java.util.logging.*;
+import java.util.List;
 
 public class Application extends Controller {
 
-  public static void slettPaamelding(String deltakelseId) {
-    Deltakelse deltakelse = Deltakelse.findById(Long.valueOf(deltakelseId));
+  public static void slettPaamelding(Long deltakelseId) {
+    Deltakelse deltakelse = Deltakelse.findById(deltakelseId);
     String treningId = deltakelse.trening.getId().toString();
     deltakelse.delete();
     redirect("Application.index", treningId);
   }
 
-  public static void settStatus(@Required String person, String status, String trening) {
-    if (person == null) {
-      redirect("Application.index", trening);
+  public static void settStatus(@Required Long personId, String status, Long treningId) {
+    Logger.info(personId +", " + status + ", " + treningId);
+    if (personId == null) {
+      redirect("Application.index", treningId);
     }
 
-    Trening gjeldendeTrening = Trening.findById(Long.valueOf(trening));
+    Trening trening = Trening.findById(treningId);
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
-    Person endreForPerson = Person.findById(Long.valueOf(person));
-    Deltakelse deltakelse = Deltakelse.finn(endreForPerson, gjeldendeTrening);
+    Person person = Person.findById(personId);
+    Deltakelse deltakelse = Deltakelse.finn(person, trening);
     if (deltakelse == null) {
-      deltakelse = new Deltakelse(endreForPerson, gjeldendeTrening);
+      deltakelse = new Deltakelse(person, trening);
     }
 
     deltakelse.status = deltakerstatus;
     deltakelse.save();
-    redirect("Application.index", trening);
+    redirect("Application.index", treningId);
   }
 
 
-  public static void endreAktivTrening(@Required String trening) {
-    Logger.info("Ny treningId: " + trening);
-    redirect("Application.index", trening);
+  public static void endreAktivTrening(@Required Long treningId) {
+    Logger.info("Ny treningId: " + treningId);
+    redirect("Application.index", treningId.toString());
   }
 
-  public static void index(String trening) {
-    Long treningsId;
+  public static void index(Long treningId) {
     List<Trening> treninger = Trening.finnAlleAktive();
-    if (trening == null) {
-      treningsId = finnNesteTreningId(treninger);
-    } else {
-      treningsId = Long.valueOf(trening);
+    if (treningId == null) {
+      treningId = finnNesteTreningId(treninger);
     }
-
-    Trening gjeldendeTrening = Trening.findById(treningsId);
-    List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(treningsId);
-    List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(treningsId);
-    List<Person> personerUtenStatus = Person.finnAlleUtenStatus(treningsId);
+    Trening gjeldendeTrening = Trening.findById(treningId);
+    List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(treningId);
+    List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(treningId);
+    List<Person> personerUtenStatus = Person.finnAlleUtenStatus(treningId);
 
     render(treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
   }
@@ -71,9 +66,9 @@ public class Application extends Controller {
     }
   }
 
-  public static void listDeltakelser(long treningsid) {
+  public static void listDeltakelser(Long treningId) {
     //Finn alle deltakelser for gitte trening
-    List<Deltakelse> deltakelser = Deltakelse.find("trening.id=?", treningsid).fetch();
+    List<Deltakelse> deltakelser = Deltakelse.find("trening.id=?", treningId).fetch();
     renderJSON(deltakelser);
   }
 
