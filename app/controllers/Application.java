@@ -34,25 +34,19 @@ public class Application extends Controller {
     Logger.info("Setter status for person.id=" + person + ", for trening.id=" + trening);
     Logger.info("\tstatus =" + status);
 
-    Person endreForPerson = Person.findById(Long.valueOf(person));
     Trening gjeldendeTrening = Trening.findById(Long.valueOf(trening));
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
-    new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
-
-    List<Trening> treninger = hentAktiveTreninger();
-
-    Long treningsId = gjeldendeTrening.getId();
-
-    List<Deltakelse> deltakelserKommer = hentDeltakelserKommer(treningsId);
-    List<Deltakelse> deltakelserKommerIkke = hentDeltakelserKommerIkke(treningsId);
-
-    List<Person> personerUtenStatus = hentPersonerUtenStatus(treningsId);
+    if (person!=null) {
+        Person endreForPerson = Person.findById(Long.valueOf(person));
+        new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
+    }
 
     //todo: Må ta inn gjeldendeTrening
-    redirect("Application.index", treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
+    redirect("Application.index");
   }
 
-  public static void endreAktivTrening(@Required String trening) {
+
+    public static void endreAktivTrening(@Required String trening) {
     Logger.info("Ny treningId: " + trening);
     List<Trening> treninger = hentAktiveTreninger();
     Long treningsId = Long.valueOf(trening);
