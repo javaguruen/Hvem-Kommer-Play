@@ -4,11 +4,13 @@ import models.*;
 import models.Person;
 import no.hvemkommer.Deltakerstatus;
 import play.*;
+import play.Logger;
 import play.data.validation.Required;
 import play.db.jpa.JPABase;
 import play.mvc.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 public class Application extends Controller {
 
@@ -20,17 +22,20 @@ public class Application extends Controller {
   }
 
   public static void settStatus(@Required String person, String status, String trening) {
-    Logger.info("Setter status for person.id=" + person + ", for trening.id=" + trening);
-    Logger.info("\tstatus =" + status);
+    if (person == null) {
+      redirect("Application.index", trening);
+    }
 
     Trening gjeldendeTrening = Trening.findById(Long.valueOf(trening));
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
-    if (person != null) {
-      Person endreForPerson = Person.findById(Long.valueOf(person));
-      // TODO: Sjekk først om gitt deltakelse finnes fra før
-      new Deltakelse(endreForPerson, gjeldendeTrening, deltakerstatus).save();
+    Person endreForPerson = Person.findById(Long.valueOf(person));
+    Deltakelse deltakelse = Deltakelse.finn(endreForPerson, gjeldendeTrening);
+    if (deltakelse == null) {
+      deltakelse = new Deltakelse(endreForPerson, gjeldendeTrening);
     }
 
+    deltakelse.status = deltakerstatus;
+    deltakelse.save();
     redirect("Application.index", trening);
   }
 

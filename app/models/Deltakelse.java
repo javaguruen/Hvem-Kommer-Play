@@ -21,10 +21,9 @@ public class Deltakelse extends Model {
   @Required
   public Deltakerstatus status;
 
-  public Deltakelse(Person person, Trening trening, Deltakerstatus status) {
+  public Deltakelse(Person person, Trening trening) {
     this.person = person;
     this.trening = trening;
-    this.status = status;
   }
 
   public String toString() {
@@ -39,5 +38,7 @@ public class Deltakelse extends Model {
     return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Ja, treningsId).fetch();
   }
 
-
+  public static Deltakelse finn(Person person, Trening trening) {
+    return Deltakelse.find("person=? and trening=?", person,trening).first();
+  }
 }
