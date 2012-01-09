@@ -61,8 +61,8 @@ public class Application extends Controller {
     if (aktiviteter.size() == 0) {
       return null;
     } else {
-      Aktivitet nesteTrening = aktiviteter.get(0);
-      return nesteTrening.getId();
+      Aktivitet nesteAktivitet = aktiviteter.get(0);
+      return nesteAktivitet.getId();
     }
   }
 
@@ -73,8 +73,8 @@ public class Application extends Controller {
   }
 
   public static void listDeltakelserNesteAktivitet() {
-    List<Aktivitet> treninger = Aktivitet.find("aktiv=true order by dato ASC").fetch(1);
+    List<Aktivitet> aktiviteter = Aktivitet.find("aktiv=true order by dato ASC").fetch(1);
     //Finne neste aktivitet
-    listDeltakelser(treninger.get(0).getId());
+    listDeltakelser(aktiviteter.get(0).getId());
   }
 }

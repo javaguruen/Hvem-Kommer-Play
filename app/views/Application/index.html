@@ -29,12 +29,6 @@ Klokkeslett: ${gjeldendeAktivitet.tidspunkt} <br>
       <option value="Nei">Nei</option>
   </select>
     <input type="hidden" name="aktivitetId" value="${gjeldendeAktivitet.id}"/>
-
-    <!--select name="aktivitet">
-       #{list items:treninger, as:'trening'}
-            <option value="${trening.id}" name="aktivitet">${trening.dato}</option>
-       #{/list}
-    </select-->
     <input type="submit" value="Sett status"/>
 </form>
 </p>
