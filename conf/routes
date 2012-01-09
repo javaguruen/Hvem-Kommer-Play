@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                                     Kretss.velgKrets
+GET     /                                     Gruppes.velgGruppe
 #GET    /Person                               Person.ny
 GET     /personliste                          Persons.list(format:'json',orderBy:'fornavn')
 GET     /treningliste                         Trenings.list(format:'json',orderBy:'dato')
