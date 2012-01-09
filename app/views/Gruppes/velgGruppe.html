@@ -1,0 +1,10 @@
+<h1>Velg gruppe:</h1>
+<table>
+#{list grupper, as:'gruppe'}
+    <tr>
+        <td>${gruppe.navn}</td>
+        <td>--</td>
+        <td><a href="@{Application.index(gruppe.id)}">Velg</a></td>
+    </tr>
+#{/list}  
+</table>

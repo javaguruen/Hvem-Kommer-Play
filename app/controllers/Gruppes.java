@@ -8,6 +8,7 @@ public class Gruppes extends CRUD {
 
   public static void velgGruppe(){
     List<Gruppe> grupper = hentAktiveGrupper();
+    render(grupper);
 
   }
 
