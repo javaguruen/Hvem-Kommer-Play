@@ -14,7 +14,7 @@ public class Gruppe extends Model {
   public String beskrivelse;
   public boolean aktiv = true;
   @OneToMany
-  public List<Trening> treninger = new ArrayList<Trening>();
+  public List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
 
   public Gruppe() {
     this.aktiv = true;

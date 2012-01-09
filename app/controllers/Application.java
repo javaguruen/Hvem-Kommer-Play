@@ -1,8 +1,8 @@
 package controllers;
 
+import models.Aktivitet;
 import models.Deltakelse;
 import models.Person;
-import models.Trening;
 import no.hvemkommer.Deltakerstatus;
 import play.Logger;
 import play.data.validation.Required;
@@ -14,67 +14,67 @@ public class Application extends Controller {
 
   public static void slettPaamelding(Long deltakelseId) {
     Deltakelse deltakelse = Deltakelse.findById(deltakelseId);
-    String treningId = deltakelse.trening.getId().toString();
+    String aktivitetId = deltakelse.aktivitet.getId().toString();
     deltakelse.delete();
-    redirect("Application.index", treningId);
+    redirect("Application.index", aktivitetId);
   }
 
-  public static void settStatus(@Required Long personId, String status, Long treningId) {
-    Logger.info(personId +", " + status + ", " + treningId);
+  public static void settStatus(@Required Long personId, String status, Long aktivitetId) {
+    Logger.info(personId +", " + status + ", " + aktivitetId);
     if (personId == null) {
-      redirect("Application.index", treningId);
+      redirect("Application.index", aktivitetId);
     }
 
-    Trening trening = Trening.findById(treningId);
+    Aktivitet aktivitet = Aktivitet.findById(aktivitetId);
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
     Person person = Person.findById(personId);
-    Deltakelse deltakelse = Deltakelse.finn(person, trening);
+    Deltakelse deltakelse = Deltakelse.finn(person, aktivitet);
     if (deltakelse == null) {
-      deltakelse = new Deltakelse(person, trening);
+      deltakelse = new Deltakelse(person, aktivitet);
     }
 
     deltakelse.status = deltakerstatus;
     deltakelse.save();
-    redirect("Application.index", treningId);
+    redirect("Application.index", aktivitetId);
   }
 
 
-  public static void endreAktivTrening(@Required Long treningId) {
-    Logger.info("Ny treningId: " + treningId);
-    redirect("Application.index", treningId.toString());
+  public static void endreAktivAktivitet(@Required Long aktivitetId) {
+    Logger.info("Ny aktivitetId: " + aktivitetId);
+    redirect("Application.index", aktivitetId);
   }
 
-  public static void index(Long treningId) {
-    List<Trening> treninger = Trening.finnAlleAktive();
-    if (treningId == null) {
-      treningId = finnNesteTreningId(treninger);
+  public static void index(Long aktivitetId) {
+    List<Aktivitet> aktiviteter = Aktivitet.finnAlleAktive();
+    if (aktivitetId == null) {
+      aktivitetId = finnNesteAktivitetId(aktiviteter);
     }
-    Trening gjeldendeTrening = Trening.findById(treningId);
-    List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(treningId);
-    List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(treningId);
-    List<Person> personerUtenStatus = Person.finnAlleUtenStatus(treningId);
+    Aktivitet gjeldendeAktivitet = Aktivitet.findById(aktivitetId);
+    List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(aktivitetId);
+    List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(aktivitetId);
+    List<Person> personerUtenStatus = Person.finnAlleUtenStatus(aktivitetId);
 
-    render(treninger, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeTrening);
+    render(aktiviteter, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeAktivitet);
   }
 
-  private static Long finnNesteTreningId(List<Trening> treninger) {
-    if (treninger.size() == 0) {
+  private static Long finnNesteAktivitetId(List<Aktivitet> aktiviteter) {
+    if (aktiviteter.size() == 0) {
       return null;
     } else {
-      Trening nesteTrening = treninger.get(0);
+      Aktivitet nesteTrening = aktiviteter.get(0);
       return nesteTrening.getId();
     }
   }
 
-  public static void listDeltakelser(Long treningId) {
-    //Finn alle deltakelser for gitte trening
-    List<Deltakelse> deltakelser = Deltakelse.find("trening.id=?", treningId).fetch();
+  public static void listDeltakelser(Long aktivitetId) {
+    //Finn alle deltakelser for gitte aktivitet
+    List<Deltakelse> deltakelser = Deltakelse.find("aktivitet.id=?", aktivitetId).fetch();
     renderJSON(deltakelser);
   }
 
-  public static void listDeltakelserNesteTrening() {
-    List<Trening> treninger = Trening.find("aktiv=true order by dato ASC").fetch(1);
-    //Finne neste trening
+  public static void listDeltakelserNesteAktivitet() {
+    List<Aktivitet> treninger = Aktivitet.find("aktiv=true order by dato ASC").fetch(1);
+    //Finne neste aktivitet
     listDeltakelser(treninger.get(0).getId());
   }
 }

@@ -17,28 +17,28 @@ public class Deltakelse extends Model {
   public Person person;
   @ManyToOne
   @Required
-  public Trening trening;
+  public Aktivitet aktivitet;
   @Required
   public Deltakerstatus status;
 
-  public Deltakelse(Person person, Trening trening) {
+  public Deltakelse(Person person, Aktivitet aktivitet) {
     this.person = person;
-    this.trening = trening;
+    this.aktivitet = aktivitet;
   }
 
   public String toString() {
     return person.toString() + " - " + status;
   }
 
-  public static List<Deltakelse> finnAlleSomIkkeKommer(Long treningsId) {
-    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Nei, treningsId).fetch();
+  public static List<Deltakelse> finnAlleSomIkkeKommer(Long aktivitetId) {
+    return Deltakelse.find("status=? and aktivitet.id=?", Deltakerstatus.Nei, aktivitetId).fetch();
   }
 
-  public static List<Deltakelse> finnAlleSomKommer(Long treningsId) {
-    return Deltakelse.find("status=? and trening.id=?", Deltakerstatus.Ja, treningsId).fetch();
+  public static List<Deltakelse> finnAlleSomKommer(Long aktivitetId) {
+    return Deltakelse.find("status=? and aktivitet.id=?", Deltakerstatus.Ja, aktivitetId).fetch();
   }
 
-  public static Deltakelse finn(Person person, Trening trening) {
-    return Deltakelse.find("person=? and trening=?", person,trening).first();
+  public static Deltakelse finn(Person person, Aktivitet aktivitet) {
+    return Deltakelse.find("person=? and aktivitet=?", person,aktivitet).first();
   }
 }

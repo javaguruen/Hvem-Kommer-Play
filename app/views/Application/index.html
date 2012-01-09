@@ -4,20 +4,20 @@
 
 #{welcome /}
         -->
-<h1>Påmelding til fotballtrening</h1>
-<form action="@{Application.endreAktivTrening()}" method="GET">
-    Velg en annen trening: <select size="1" name="treningId">
-    #{list items:treninger, as:'t'}
+<h1>Hvem kommer?</h1>
+<form action="@{Application.endreAktivAktivitet()}" method="GET">
+    Velg en annen aktivitet: <select size="1" name="aktivitetId">
+    #{list items:aktiviteter, as:'t'}
     <option value="${t.id}">${no.hvemkommer.DatoUtil.formatterDato( t.dato )}</option>
     #{/list}
 </select>
-    <input type="submit" value="Endre trening"/>
+    <input type="submit" value="Endre aktivitet"/>
 </form>
 
 <hr>
-<h2>Trening ${no.hvemkommer.DatoUtil.formatterDato( gjeldendeTrening.dato )}</h2>
-Sted: ${gjeldendeTrening.sted} <br>
-Klokkeslett: ${gjeldendeTrening.tidspunkt} <br>
+<h2>Aktivitet ${no.hvemkommer.DatoUtil.formatterDato( gjeldendeAktivitet.dato )}</h2>
+Sted: ${gjeldendeAktivitet.sted} <br>
+Klokkeslett: ${gjeldendeAktivitet.tidspunkt} <br>
 <p>
 <form action="@{Application.settStatus()}" method="GET">
     Velg person: <select size="1" name="personId">
@@ -28,11 +28,11 @@ Klokkeslett: ${gjeldendeTrening.tidspunkt} <br>
       <option value="Ja">Ja</option>
       <option value="Nei">Nei</option>
   </select>
-    <input type="hidden" name="treningId" value="${gjeldendeTrening.id}"/>
+    <input type="hidden" name="aktivitetId" value="${gjeldendeAktivitet.id}"/>
 
-    <!--select name="trening">
+    <!--select name="aktivitet">
        #{list items:treninger, as:'trening'}
-            <option value="${trening.id}" name="trening">${trening.dato}</option>
+            <option value="${trening.id}" name="aktivitet">${trening.dato}</option>
        #{/list}
     </select-->
     <input type="submit" value="Sett status"/>
