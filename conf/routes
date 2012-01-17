@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                                     Gruppes.velgGruppe
+GET     /                                     Application.index
 #GET    /Person                               Person.ny
 GET     /personliste                          Persons.list(format:'json',orderBy:'fornavn')
 GET     /treningliste                         Aktivitets.list(format:'json',orderBy:'dato')
@@ -16,12 +16,15 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
+GET			/aktivitets/{id}		Aktivitets.show
+POST		/aktivitets/{id}		Aktivitets.show
 
 # Import CRUD routes
 *      /admin              CRUD.index
 GET /admin											CRUD.index
 # Routes for the CRUD module
 # ~~~~~~~~~~~
+
 
 #{crud.types}
 GET			/?											${type.controllerClass.name.substring(12).replace('$','')}.index
