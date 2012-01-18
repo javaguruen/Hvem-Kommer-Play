@@ -1,10 +1,6 @@
-<!--
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'Hvem kommer?' /}
 
-#{welcome /}
-        -->
-<h1>Hvem kommer?</h1>
 <form action="@{Application.endreAktivAktivitet()}" method="GET">
     Velg en annen aktivitet: <select size="1" name="aktivitetId">
     #{list items:aktiviteter, as:'t'}

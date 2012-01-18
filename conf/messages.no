@@ -1,24 +1,24 @@
 # Default CRUD messages
 # ~~~~~~
 
-crud.title=Administration
-crud.home=Home
-crud.blank=New
-crud.index.title=Choose the object to edit
-crud.index.objectType=Object type
+crud.title=Administrasjon
+crud.home=Hjem
+crud.blank=Ny
+crud.index.title=Velg objekt du vil redigere
+crud.index.objectType=Objekttype
 crud.index.action=
-crud.index.add=Add
-crud.add=Add &{%s}
+crud.index.add=Legg til
+crud.add=Legg til &{%s}
 crud.list.title=&{%s}
 crud.list.size=%d &{%s}
 crud.list.totalSize=%d total
-crud.pagination.previous=« Previous
-crud.pagination.next=Next »
-crud.pagination.last=Last »»
-crud.pagination.first=«« First
-crud.show.title=Edit &{%s}
-crud.save=Save
-crud.saveAndContinue=Save and continue editing
+crud.pagination.previous=Â« Forrige
+crud.pagination.next=Neste Â»
+crud.pagination.last=Siste Â»Â»
+crud.pagination.first=Â«Â« FÃ¸rste
+crud.show.title=Rediger &{%s}
+crud.save=Lagre
+crud.saveAndContinue=Lagre og forsett med redigering
 crud.cancel=Cancel
 crud.hasErrors=Please correct errors
 crud.blank.title=Add &{%s}

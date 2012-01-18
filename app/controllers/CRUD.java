@@ -23,7 +23,7 @@ public abstract class CRUD extends Controller {
 
     public static void index() {
         if (getControllerClass() == CRUD.class) {
-            forbidden();
+            //forbidden();
         }
         render("CRUD/index.html");
     }

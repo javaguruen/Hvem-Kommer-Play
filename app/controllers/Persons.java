@@ -1,7 +1,5 @@
 package controllers;
 
-import play.mvc.Before;
-
 
 public class Persons extends CRUD {
    /*@Before
