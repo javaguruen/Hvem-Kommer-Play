@@ -35,7 +35,7 @@ public class Aktivitet extends Model {
   }
 
   public static List<Aktivitet> finnAlleAktive() {
-    return Aktivitet.find("aktiv=true order by dato ASC").fetch();
+    return Aktivitet.find("aktiv=true and dato >= now() order by dato ASC").fetch();
   }
 
 }

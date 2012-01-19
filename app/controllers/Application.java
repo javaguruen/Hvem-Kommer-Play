@@ -2,6 +2,7 @@ package controllers;
 
 import models.Aktivitet;
 import models.Deltakelse;
+import models.Gruppe;
 import models.Person;
 import no.hvemkommer.Deltakerstatus;
 import play.Logger;
@@ -11,6 +12,27 @@ import play.mvc.Controller;
 import java.util.List;
 
 public class Application extends Controller {
+
+  public static void index() {
+    List<Gruppe> grupper = Gruppe.finnAlleAktive();
+    List<Aktivitet> aktiviteter = Aktivitet.finnAlleAktive();
+    render(grupper, aktiviteter);
+  }
+
+  public static void oldindex(Long aktivitetId) {
+    List<Aktivitet> aktiviteter = Aktivitet.finnAlleAktive();
+    if (aktivitetId == null) {
+      aktivitetId = finnNesteAktivitetId(aktiviteter);
+    }
+    Aktivitet gjeldendeAktivitet = Aktivitet.findById(aktivitetId);
+    List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(aktivitetId);
+    List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(aktivitetId);
+    List<Person> personerUtenStatus = Person.finnAlleUtenStatus(aktivitetId);
+
+    render(aktiviteter, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeAktivitet);
+  }
+
+
 
   public static void slettPaamelding(Long deltakelseId) {
     Deltakelse deltakelse = Deltakelse.findById(deltakelseId);
@@ -42,19 +64,6 @@ public class Application extends Controller {
   public static void endreAktivAktivitet(@Required Long aktivitetId) {
     Logger.info("Ny aktivitetId: " + aktivitetId);
     redirect("Application.index", aktivitetId);
-  }
-
-  public static void index(Long aktivitetId) {
-    List<Aktivitet> aktiviteter = Aktivitet.finnAlleAktive();
-    if (aktivitetId == null) {
-      aktivitetId = finnNesteAktivitetId(aktiviteter);
-    }
-    Aktivitet gjeldendeAktivitet = Aktivitet.findById(aktivitetId);
-    List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(aktivitetId);
-    List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(aktivitetId);
-    List<Person> personerUtenStatus = Person.finnAlleUtenStatus(aktivitetId);
-
-    render(aktiviteter, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeAktivitet);
   }
 
   private static Long finnNesteAktivitetId(List<Aktivitet> aktiviteter) {

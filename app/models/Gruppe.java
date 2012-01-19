@@ -29,4 +29,9 @@ public class Gruppe extends Model {
   public String toString() {
     return navn + " " + beskrivelse;
   }
+
+  public static List<Gruppe> finnAlleAktive() {
+    return Gruppe.find("aktiv=true order by navn").fetch();
+  }
+
 }

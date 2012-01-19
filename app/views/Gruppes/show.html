@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:'Gruppe' /}
+
+
+#{if gruppe == null}
+  Feil, fant ikke gruppen du søkte etter...
+#{/if}
+#{else}
+  <table border="0" cellpadding="10">
+    <tr>
+      <th>Navn;</th><th>${gruppe.navn}</th>
+    </tr>
+    <tr>
+      <th>Beskrivelse:</th><td>${gruppe.beskrivelse}</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td><td><a href="@{Gruppes.edit(gruppe.id)}">Endre</a></td>
+    </tr>
+  </table>
+#{/else}

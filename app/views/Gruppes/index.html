@@ -1,0 +1,12 @@
+#{extends 'main.html' /}
+#{set title:'Gruppe' /}
+
+<form action="@{Gruppes.show()}" method="GET">
+  Velg gruppe: <select size="1" name="id">
+#{list items:grupper, as:'gruppe'}
+  <option value="${gruppe.id}">${gruppe.navn}</option>
+#{/list}
+</select>
+  <input type="submit" value="Velg"/>
+</form>
+<a href="@{Gruppes.create()}">Opprett ny gruppe</a>
