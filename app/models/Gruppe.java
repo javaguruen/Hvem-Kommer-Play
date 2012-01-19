@@ -30,6 +30,10 @@ public class Gruppe extends Model {
     return navn + " " + beskrivelse;
   }
 
+  public static Gruppe finnByNavn(String navn) {
+    return Gruppe.find("navn=?",navn).first();
+  }
+
   public static List<Gruppe> finnAlleAktive() {
     return Gruppe.find("aktiv=true order by navn").fetch();
   }

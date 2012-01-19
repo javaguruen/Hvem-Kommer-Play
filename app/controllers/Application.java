@@ -19,35 +19,41 @@ public class Application extends Controller {
     render(grupper, aktiviteter);
   }
 
-  public static void oldindex(Long aktivitetId) {
-    List<Aktivitet> aktiviteter = Aktivitet.finnAlleAktive();
-    if (aktivitetId == null) {
+
+  public static void paamelding(String gruppeNavn, Long aktivitetId) {
+    Gruppe gruppe = Gruppe.finnByNavn(gruppeNavn);
+    if (gruppe==null) {
+      notFound("Fant ikke gruppe " +gruppeNavn);
+    }
+    List<Aktivitet> aktiviteter = Aktivitet.finnAlleAktive(gruppe.id);
+    if (aktiviteter.size()==0) {
+      notFound("Fant ikke aktiviteter for " +gruppeNavn);
+    }
+    if (aktivitetId==null) {
       aktivitetId = finnNesteAktivitetId(aktiviteter);
     }
+
     Aktivitet gjeldendeAktivitet = Aktivitet.findById(aktivitetId);
     List<Deltakelse> deltakelserKommer = Deltakelse.finnAlleSomKommer(aktivitetId);
     List<Deltakelse> deltakelserKommerIkke = Deltakelse.finnAlleSomIkkeKommer(aktivitetId);
     List<Person> personerUtenStatus = Person.finnAlleUtenStatus(aktivitetId);
 
-    render(aktiviteter, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeAktivitet);
+    renderTemplate("Application/paamelding.html",gruppe,aktiviteter, deltakelserKommer, deltakelserKommerIkke, personerUtenStatus, gjeldendeAktivitet);
   }
-
-
 
   public static void slettPaamelding(Long deltakelseId) {
     Deltakelse deltakelse = Deltakelse.findById(deltakelseId);
     String aktivitetId = deltakelse.aktivitet.getId().toString();
     deltakelse.delete();
-    redirect("Application.index", aktivitetId);
+    redirect("Application.paamelding", deltakelse.aktivitet.gruppe.navn,aktivitetId);
   }
 
   public static void settStatus(@Required Long personId, String status, Long aktivitetId) {
+    Aktivitet aktivitet = Aktivitet.findById(aktivitetId);
     Logger.info(personId +", " + status + ", " + aktivitetId);
     if (personId == null) {
-      redirect("Application.index", aktivitetId);
+      redirect("Application.paamelding", aktivitet.gruppe.navn,aktivitetId);
     }
-
-    Aktivitet aktivitet = Aktivitet.findById(aktivitetId);
     Deltakerstatus deltakerstatus = Deltakerstatus.valueOf(status);
     Person person = Person.findById(personId);
     Deltakelse deltakelse = Deltakelse.finn(person, aktivitet);
@@ -57,13 +63,14 @@ public class Application extends Controller {
 
     deltakelse.status = deltakerstatus;
     deltakelse.save();
-    redirect("Application.index", aktivitetId);
+    redirect("Application.paamelding", aktivitet.gruppe.navn,aktivitetId);
   }
 
 
   public static void endreAktivAktivitet(@Required Long aktivitetId) {
     Logger.info("Ny aktivitetId: " + aktivitetId);
-    redirect("Application.index", aktivitetId);
+    Aktivitet aktivitet = Aktivitet.findById(aktivitetId);
+    redirect("Application.paamelding", aktivitet.gruppe.navn,aktivitetId);
   }
 
   private static Long finnNesteAktivitetId(List<Aktivitet> aktiviteter) {

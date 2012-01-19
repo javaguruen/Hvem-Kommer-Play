@@ -34,6 +34,9 @@ public class Aktivitet extends Model {
     return dato.toString() + " - " + sted;
   }
 
+  public static List<Aktivitet> finnAlleAktive(Long gruppeId) {
+    return Aktivitet.find("gruppe.id=? and aktiv=true and dato >= now() order by dato ASC",gruppeId).fetch();
+  }
   public static List<Aktivitet> finnAlleAktive() {
     return Aktivitet.find("aktiv=true and dato >= now() order by dato ASC").fetch();
   }
