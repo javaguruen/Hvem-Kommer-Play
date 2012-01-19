@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+#{set title:'Editer gruppe' /}
+
+<form action="@{Gruppes.createNew()}" method="POST">
+  <table border="0" cellpadding="10">
+    <tr>
+      <th>Navn;</th>
+      <td><input name="navn" value="${gruppe.navn}"></td>
+    </tr>
+    <tr>
+      <th>Beskrivelse:</th>
+      <td><input name="beskrivelse" value="${gruppe.beskrivelse}"></td>
+    </tr>
+    <tr>
+      <th>Aktiv:</th>
+      <td><input type="checkbox" name="aktiv" checked="checked"></td>
+    </tr>
+  </table>
+
+  <input type="submit" value="Lagre"/>
+</form>
