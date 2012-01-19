@@ -6,8 +6,8 @@ POST    /gruppe                              Gruppes.save
 GET    /gruppe                              Gruppes.create
 GET     /gruppe/{id}/edit                     Gruppes.edit
 
-GET /paamelding/{gruppeNavn}                 Application.paamelding
-GET /paamelding/{gruppeNavn}/{aktivitetId}   Application.paamelding
+GET /paamelding/{gruppeNavn}                 Deltakelses.paamelding
+GET /paamelding/{gruppeNavn}/{aktivitetId}   Deltakelses.paamelding
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
