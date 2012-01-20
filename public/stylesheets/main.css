@@ -1,18 +1,45 @@
 tr.kommer td {
-	background-color: #ddffaa; color: black;  ;
+	background-color: #eeffaa; color: black;  ;
 }
 tr.kommerIkke td {
-	background-color: #ffa07a; color: black; ;
+	background-color: #ff7788; color: black; ;
 }
 
-td.kolonne1 td {
+td.kolonne1 {
+    width: 90% ;
+}
+
+td.kolonne2  {
     width: 5% ;
 }
 
-td.kolonne2 td {
+td.kolonne3  {
     width: 5% ;
 }
 
-td.kolonne3 td {
-    width: 65% ;
+div.hovedramme {
+    /*background-color: #aaaaaa; */
+    border-radius: 15px 15px;
+    background-image: linear-gradient(bottom, rgb(214,211,214) 14%, rgb(117,117,117) 57%, rgb(99,95,99) 82%);
+    background-image: -o-linear-gradient(bottom, rgb(214,211,214) 14%, rgb(117,117,117) 57%, rgb(99,95,99) 82%);
+    background-image: -moz-linear-gradient(bottom, rgb(214,211,214) 14%, rgb(150,150,150) 57%, rgb(120,120,120) 82%);
+    background-image: -webkit-linear-gradient(bottom, rgb(214,211,214) 14%, rgb(117,117,117) 57%, rgb(99,95,99) 82%);
+    background-image: -ms-linear-gradient(bottom, rgb(214,211,214) 14%, rgb(117,117,117) 57%, rgb(99,95,99) 82%);
+
+    /*background-image: -webkit-gradient(*/
+        /*linear,*/
+        /*left bottom,*/
+        /*left top,*/
+        /*color-stop(0.14, rgb(214,211,214)),*/
+        /*color-stop(0.57, rgb(117,117,117)),*/
+        /*color-stop(0.82, rgb(99,95,99))*/
+    /*);*/
+    width:400px;
+
+}
+
+
+body {
+    color: #333333;
+    font-family: Century Gothic, sans-serif;
 }

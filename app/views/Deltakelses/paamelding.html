@@ -1,26 +1,29 @@
 #{extends 'main.html' /}
 #{set title:'Hvem kommer?' /}
 
-<table bgcolor="#aaaaaa" width="400"> <tr> <td>
-  <h1>Gruppe :${gruppe.navn}</h1>
+<div  class="hovedramme">
+  <table>
+    <tr>
+      <td>
+        <h1>Gruppe :${gruppe.navn}</h1>
 
-  <form action="@{Deltakelses.endreAktivAktivitet()}" method="GET">
-    Velg en annen aktivitet: <select size="1" name="aktivitetId">
-  #{list items:aktiviteter, as:'t'}
-    <option value="${t.id}">${no.hvemkommer.DatoUtil.formatterDato( t.dato )}</option>
-  #{/list}
-  </select>
-    <input type="submit" value="Endre aktivitet"/>
-  </form>
+        <form action="@{Deltakelses.endreAktivAktivitet()}" method="GET">
+          Velg en annen aktivitet: <select size="1" name="aktivitetId">
+        #{list items:aktiviteter, as:'t'}
+          <option value="${t.id}">${no.hvemkommer.DatoUtil.formatterDato( t.dato )}</option>
+        #{/list}
+        </select>
+          <input type="submit" value="Endre aktivitet"/>
+        </form>
 
-  <hr>
-  <h2>Aktivitet ${no.hvemkommer.DatoUtil.formatterDato( gjeldendeAktivitet.dato )}</h2>
-  Sted: ${gjeldendeAktivitet.sted} <br>
-  Klokkeslett: ${gjeldendeAktivitet.tidspunkt} <br>
+        <hr>
+        <h2>Aktivitet ${no.hvemkommer.DatoUtil.formatterDato( gjeldendeAktivitet.dato )}</h2>
+        Sted: ${gjeldendeAktivitet.sted} <br>
+        Klokkeslett: ${gjeldendeAktivitet.tidspunkt} <br>
 
-  <p>
+        <p>
 
-  *{<form action="@{Deltakelses.settStatus()}" method="GET">}*
+        *{<form action="@{Deltakelses.settStatus()}" method="GET">}*
     *{Velg person: <select size="1" name="personId">}*
   *{#{list items:personerUtenStatus, as:'p'}}*
     *{<option value="${p.id}">${p.fornavn} ${p.etternavn}</option>}*
@@ -32,46 +35,58 @@
     *{<input type="hidden" name="aktivitetId" value="${gjeldendeAktivitet.id}"/>}*
     *{<input type="submit" value="Sett status"/>}*
   *{</form>}*
-  </p>
-  <p>
-  <table cellpadding="5" cellspacing="0" width="380">
-    <tr>
-      <td colspan="2">Antall som kommer: ${deltakelserKommer.size()}</td>
-    </tr>
-    <tr>
-      <th align="LEFT">Kommer</th>
-      <th></th>
-    </tr>
-  #{list items:deltakelserKommer, as:'d'}
-    <tr class="kommer">
-      <td width="90%">${d.person.fornavn} ${d.person.etternavn}</td>
-      <td width="5%"><a href="@{Deltakelses.settStatus(d.person.id,"Nei",d.aktivitet.id)}"><img src="/public/images/nei.png"/></a></td>
-      <td width="5%"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img src="/public/images/ukjent.png"/></a></td>
-    </tr>
-  #{/list}
-    <tr>
-      <th align="LEFT"><br>Kommer ikke</th>
-      <th></th>
-    </tr>
-  #{list items:deltakelserKommerIkke, as:'d'}
-    <tr class="kommerIkke">
-      <td width="90%">${d.person.fornavn} ${d.person.etternavn}</td>
-      <td width="5%"><a href="@{Deltakelses.settStatus(d.person.id,"Ja",d.aktivitet.id)}"><img src="/public/images/ja.png"/></a></td>
-      <td width="5%"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img src="/public/images/ukjent.png"/></a></td>
-    </tr>
-  #{/list}
-  <tr>
-    <th align="LEFT"><br>Ikke påmeldt</th>
-    <th></th>
-  </tr>
-#{list items:personerUtenStatus, as:'p'}
-  <tr class="ikkePaameldt">
-    <td width="90%">${p.fornavn} ${p.etternavn}</td>
-    <td width="5%"><a href="@{Deltakelses.settStatus(p.id,"Ja",gjeldendeAktivitet.id)}"><img src="/public/images/ja.png"/></a></td>
-    <td width="5%"><a href="@{Deltakelses.settStatus(p.id,"Nei",gjeldendeAktivitet.id)}"><img src="/public/images/nei.png"/></a></td>
-  </tr>
-#{/list}
+        </p>
 
+        <p>
+        <table cellpadding="5" cellspacing="0" width="380">
+          <tr>
+            <td colspan="2">Antall som kommer: ${deltakelserKommer.size()}</td>
+          </tr>
+          <tr>
+            <th align="LEFT">Kommer</th>
+            <th></th>
+          </tr>
+
+      #{list items:deltakelserKommer, as:'d'}
+          <tr class="kommer">
+            <td class="kolonne1">${d.person.fornavn} ${d.person.etternavn}</td>
+            <td class="kolonne2"><a href="@{Deltakelses.settStatus(d.person.id,"Nei",d.aktivitet.id)}"><img
+              src="/public/images/nei.png"/></a></td>
+            <td class="kolonne3"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img
+              src="/public/images/ukjent.png"/></a></td>
+          </tr>
+        #{/list}
+
+        <tr>
+            <th align="LEFT"><br>Kommer ikke</th>
+            <th></th>
+          </tr>
+        #{list items:deltakelserKommerIkke, as:'d'}
+          <tr class="kommerIkke">
+            <td class="kolonne1">${d.person.fornavn} ${d.person.etternavn}</td>
+            <td class="kolonne2"><a href="@{Deltakelses.settStatus(d.person.id,"Ja",d.aktivitet.id)}"><img
+                src="/public/images/ja.png"/></a></td>
+            <td class="kolonne3"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img
+                src="/public/images/ukjent.png"/></a></td>
+          </tr>
+        #{/list}
+          <tr>
+            <th align="LEFT"><br>Ikke påmeldt</th>
+            <th></th>
+          </tr>
+        #{list items:personerUtenStatus, as:'p'}
+          <tr class="ikkePaameldt">
+            <td class="kolonne1">${p.fornavn} ${p.etternavn}</td>
+            <td class="kolonne2"><a href="@{Deltakelses.settStatus(p.id,"Ja",gjeldendeAktivitet.id)}"><img
+                src="/public/images/ja.png"/></a></td>
+            <td class="kolonne3"><a href="@{Deltakelses.settStatus(p.id,"Nei",gjeldendeAktivitet.id)}"><img
+                src="/public/images/nei.png"/></a></td>
+          </tr>
+        #{/list}
+
+        </table>
+      </td>
+    </tr>
   </table>
-</td></tr></table>
+</div>
 </p>
