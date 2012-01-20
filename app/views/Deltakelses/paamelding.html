@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'Hvem kommer?' /}
 
-<table bgcolor="#EEEEAA" width="400"> <tr> <td>
+<table bgcolor="#aaaaaa" width="400"> <tr> <td>
   <h1>Gruppe :${gruppe.navn}</h1>
 
   <form action="@{Deltakelses.endreAktivAktivitet()}" method="GET">
@@ -44,11 +44,9 @@
     </tr>
   #{list items:deltakelserKommer, as:'d'}
     <tr class="kommer">
-      <td width="60%">${d.person.fornavn} ${d.person.etternavn}</td>
-      <td width="20%"><a href="@{Deltakelses.settStatus(d.person.id,"Nei",d.aktivitet.id)}"><img src="/public/images/nei.png"/></a></td>
-
-      *{<td width="33%"><a href="@{Deltakelses.settStatus(d.person.id,"Nei",d.aktivitet.id)}">Kommer ikke</a></td>}*
-      <td width="20%"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img src="/public/images/ukjent.png"/></a></td>
+      <td width="90%">${d.person.fornavn} ${d.person.etternavn}</td>
+      <td width="5%"><a href="@{Deltakelses.settStatus(d.person.id,"Nei",d.aktivitet.id)}"><img src="/public/images/nei.png"/></a></td>
+      <td width="5%"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img src="/public/images/ukjent.png"/></a></td>
     </tr>
   #{/list}
     <tr>
@@ -57,9 +55,9 @@
     </tr>
   #{list items:deltakelserKommerIkke, as:'d'}
     <tr class="kommerIkke">
-      <td width="60%">${d.person.fornavn} ${d.person.etternavn}</td>
-      <td width="20%"><a href="@{Deltakelses.settStatus(d.person.id,"Ja",d.aktivitet.id)}"><img src="/public/images/ja.png"/></a></td>
-      <td width="20%"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img src="/public/images/ukjent.png"/></a></td>
+      <td width="90%">${d.person.fornavn} ${d.person.etternavn}</td>
+      <td width="5%"><a href="@{Deltakelses.settStatus(d.person.id,"Ja",d.aktivitet.id)}"><img src="/public/images/ja.png"/></a></td>
+      <td width="5%"><a href="@{Deltakelses.slettPaamelding(d.id)}"><img src="/public/images/ukjent.png"/></a></td>
     </tr>
   #{/list}
   <tr>
@@ -68,9 +66,9 @@
   </tr>
 #{list items:personerUtenStatus, as:'p'}
   <tr class="ikkePaameldt">
-    <td width="60%">${p.fornavn} ${p.etternavn}</td>
-    <td width="20%"><a href="@{Deltakelses.settStatus(p.id,"Ja",gjeldendeAktivitet.id)}"><img src="/public/images/ja.png"/></a></td>
-    <td width="20%"><a href="@{Deltakelses.settStatus(p.id,"Nei",gjeldendeAktivitet.id)}"><img src="/public/images/nei.png"/></a></td>
+    <td width="90%">${p.fornavn} ${p.etternavn}</td>
+    <td width="5%"><a href="@{Deltakelses.settStatus(p.id,"Ja",gjeldendeAktivitet.id)}"><img src="/public/images/ja.png"/></a></td>
+    <td width="5%"><a href="@{Deltakelses.settStatus(p.id,"Nei",gjeldendeAktivitet.id)}"><img src="/public/images/nei.png"/></a></td>
   </tr>
 #{/list}
 

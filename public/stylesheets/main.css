@@ -1,6 +1,18 @@
 tr.kommer td {
-	background-color: #228b22; color: black; border-bottom-style: outset;
+	background-color: #ddffaa; color: black;  ;
 }
 tr.kommerIkke td {
-	background-color: #ffa07a; color: black; border-bottom-style: outset;
+	background-color: #ffa07a; color: black; ;
+}
+
+td.kolonne1 td {
+    width: 5% ;
+}
+
+td.kolonne2 td {
+    width: 5% ;
+}
+
+td.kolonne3 td {
+    width: 65% ;
 }
