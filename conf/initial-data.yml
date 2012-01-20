@@ -1,0 +1,60 @@
+Person(1):
+  fornavn : Erik
+  etternavn : Aasmul
+Person(2):
+  fornavn : Per
+  etternavn : Persen
+Person(3) :
+  fornavn: Knut
+  etternavn : Knutsen
+Person(4):
+  fornavn : Nils
+  etternavn : Nilsen
+Person(5):
+  fornavn : Geir
+  etternavn : Olsen
+Person(6):
+  fornavn : Ole
+  etternavn : Knutsen
+Person(7):
+  fornavn : Ola I
+  etternavn : Dalen
+Person(8):
+  fornavn : Per
+  etternavn : Nilsen
+Person(9):
+  fornavn : Lars
+  etternavn : Nilsen
+Person(10):
+  fornavn: Ole
+  etternavn : Nilsen
+
+Gruppe(105):
+  navn : Fotball
+Gruppe(106):
+  navn : Brettspill
+Gruppe(107):
+  navn : Volleyball
+Gruppe(108):
+  navn : Svommegruppen
+
+
+Aktivitet(209) :
+  dato : '05-05-2012'
+  tidspunkt : '19:00'
+  gruppe : 105
+
+Aktivitet(210) :
+  dato : '06-06-2012'
+  tidspunkt : '19:00'
+  gruppe : 105
+
+Aktivitet(211) :
+  dato : '07-07-2012'
+  tidspunkt : '19:00'
+  gruppe : 105
+
+Aktivitet(212) :
+  dato : '08-08-2012'
+  tidspunkt : '19:00'
+  gruppe : 105

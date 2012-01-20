@@ -12,11 +12,7 @@ public class Person extends Model {
   public String etternavn;
   public String epost;
   public String mobilnr;
-  public boolean aktiv = true;
 
-  public Person() {
-    this.aktiv = true;
-  }
 
   public Person(String fornavn, String etternavn, String epost, String mobilnr) {
     this.fornavn = fornavn;
@@ -31,6 +27,7 @@ public class Person extends Model {
   }
 
   public static List<Person> finnAlleUtenStatus(Long aktivitetId) {
-  return Person.find("from Person as p WHERE p.aktiv=true and not exists(select 'x' from Deltakelse as d where d.aktivitet.id=? and d.person.id=p.id)", aktivitetId).fetch();
+  return Person.find("from Person as p WHERE not exists(select 'x' from Deltakelse as d where d.aktivitet.id=? and d.person.id=p.id)", aktivitetId).fetch();
   }
+
 }
