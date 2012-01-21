@@ -10,10 +10,10 @@ import play.test.Fixtures;
 @OnApplicationStart
 public class Bootstrap extends Job {
   public void doJob() {
-    Deltakelse.deleteAll();
-    Aktivitet.deleteAll();
-    Person.deleteAll();
-    Gruppe.deleteAll();
+//    Deltakelse.deleteAll();
+//    Aktivitet.deleteAll();
+//    Person.deleteAll();
+//    Gruppe.deleteAll();
 
     Logger.info("Antall personer :" + Person.count());
     if(Person.count() == 0) {

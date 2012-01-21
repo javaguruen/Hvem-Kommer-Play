@@ -28,33 +28,77 @@ Person(9):
 Person(10):
   fornavn: Ole
   etternavn : Nilsen
+Person(11):
+  fornavn : Bjørn
+  etternavn : Hamre
+Person(12):
+  fornavn : Frode
+  etternavn : Borlaug
 
 Gruppe(105):
   navn : Fotball
-Gruppe(106):
-  navn : Brettspill
-Gruppe(107):
-  navn : Volleyball
-Gruppe(108):
-  navn : Svommegruppen
+  beskrivelse :
 
-
-Aktivitet(209) :
+Aktivitet(200) :
   dato : '05-05-2012'
   tidspunkt : '19:00'
   gruppe : 105
 
-Aktivitet(210) :
+Aktivitet(201) :
   dato : '06-06-2012'
   tidspunkt : '19:00'
   gruppe : 105
 
-Aktivitet(211) :
+Aktivitet(202) :
   dato : '07-07-2012'
   tidspunkt : '19:00'
   gruppe : 105
 
-Aktivitet(212) :
+Aktivitet(203) :
   dato : '08-08-2012'
   tidspunkt : '19:00'
   gruppe : 105
+
+
+Gruppe(106):
+  navn : Brettspill
+  beskrivelse : ' '
+
+Aktivitet(204) :
+  dato : '05-05-2012'
+  tidspunkt : '19:00'
+  gruppe : 106
+
+Aktivitet(205) :
+  dato : '06-06-2012'
+  tidspunkt : '19:00'
+  gruppe : 106
+
+Aktivitet(206) :
+  dato : '07-07-2012'
+  tidspunkt : '19:00'
+  gruppe : 106
+
+Aktivitet(207) :
+  dato : '08-08-2012'
+  tidspunkt : '19:00'
+  gruppe : 106
+
+
+Gruppe(107):
+  navn : Volleyball
+  beskrivelse :
+
+Aktivitet(208) :
+  dato : '07-07-2012'
+  tidspunkt : '19:00'
+  gruppe : 107
+
+Gruppe(108):
+  navn : Svommegruppen
+  beskrivelse :
+
+Aktivitet(209) :
+  dato : '07-07-2012'
+  tidspunkt : '19:00'
+  gruppe : 108
