@@ -23,10 +23,10 @@
         <th>Kommende aktiviteter:</th>
       #{list items:aktiviteter, as:'aktivitet'}
         <tr>
-          <th class="th.aktivitetsnavn">${aktivitet.gruppe}</th>
+          <th class="th.aktivitetsnavn">${aktivitet.gruppe.navn}</th>
         </tr>
         <tr>
-          <td class="td.aktivitetsdetalj">${aktivitet.dato} kl. ${aktivitet.tidspunkt}, ${aktivitet.sted}</td>
+          <td class="td.aktivitetsdetalj"><a href="@{Deltakelses.paamelding(aktivitet.gruppe.navn,aktivitet.id)}">${aktivitet.dato} kl. ${aktivitet.tidspunkt}, ${aktivitet.sted}</a></td>
         </tr>
       #{/list}
         </th>

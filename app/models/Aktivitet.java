@@ -21,6 +21,8 @@ public class Aktivitet extends Model {
 
   public Aktivitet() {
     this.aktiv = true;
+    this.sted = "";
+
   }
 
   public Aktivitet(Date dato, String tidspunkt, String sted, Gruppe gruppe) {
